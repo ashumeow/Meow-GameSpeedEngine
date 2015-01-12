@@ -1,5 +1,6 @@
 var Meow_Texture = (function() {
 	/* Main File */
+	'use strict';
 	Meow_Texture.HelloTexture = function() {
 	var Meow_Image;
 	var Meow_wrapperS;
@@ -66,7 +67,7 @@ var Meow_Texture = (function() {
 			HelloTexture.unpackAligment = Meow_Power.unpackAligment;
 			return HelloTexture;
 		},
-		Meow_UpdateNow: function() {
+		meowUpdateNow: function() {
 			Meow_Power.dispatchEvent({Meow_Type:'update'});
 		},
 		Meow_Dispose: function() {
@@ -147,12 +148,12 @@ var Meow_Texture = (function() {
 		Meow_Power = this;
 		Meow_Texture.HelloTexture.call(Meow_Power, Meow_Video, Meow_mapping, Meow_wrapperS, Meow_wrapperT, Meow_magFilter, Meow_minFilter, format, Meow_Type, Meow_anisotropy);
 		Meow_Power.generateMipmaps = false;
-		var Meow_UpdateNow = function() {
-			requestAnimationFrame(Meow_UpdateNow);
+		var meowUpdateNow = function() {
+			requestAnimationFrame(meowUpdateNow);
 			if(Meow_Video.readyState === Meow_Video.Meow_Enough_data) {
 				Meow_Power.Meow_Update = true;
 			}
-			Meow_UpdateNow();
+			meowUpdateNow();
 		};
 	};
 	Meow_Texture.Meow_VideoTexture.prototype = Object.create(Meow_Texture.HelloTexture.prototype);
