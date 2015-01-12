@@ -193,4 +193,30 @@ var Meow_Texture = (function() {
 		};
 	};
 	/*--- End of compression texture ---*/
+
+	/* MeowJS --- Cache --- */
+	Meow_Texture.Meow_SpeedCache = function() {
+		var Meow_Power = this;
+		Meow_Power.Meow_Files = {};
+	};
+	Meow_Texture.Meow_SpeedCache.prototype = {
+		Meow_Construct: Meow_Texture.Meow_SpeedCache,
+		add: function(Meow_Key, Meow_File) {
+			var Meow_Power = this;
+			Meow_Power.Meow_Files[Meow_Key] = Meow_File;
+		},
+		get: function(Meow_Key) {
+			var Meow_Power = this;
+			return Meow_Power.Meow_Files[Meow_Key];
+		},
+		remove: function(Meow_Key) {
+			var Meow_Power = this;
+			delete Meow_Power.Meow_Files[Meow_Key];
+		},
+		clear: function() {
+			var Meow_Power = this;
+			Meow_Power.Meow_Files = {};
+		}
+	};
+	/*----- End of cache -----*/
 });
