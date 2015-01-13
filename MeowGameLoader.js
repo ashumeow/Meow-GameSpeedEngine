@@ -296,4 +296,47 @@ var Meow_Texture = function() {
 	};
 	// End of load manager
 
+	/* --- MeowJS Gaming Image Loader ---*/
+	Meow_Texture.Meow_ImageLoader = function(Meow_Mgr) {
+		var Meow_Power = this;
+		Meow_Power.Meow_SpeedCache = new Meow_Texture.Meow_SpeedCache();
+		Meow_Power.Meow_Mgr = (Meow_Mgr !== undefined) ? Meow_Mgr : Meow_Texture.Meow_Default_LoadMgr;
+	};
+	Meow_Texture.Meow_ImageLoader.prototype = {
+		Meow_Construct: Meow_Texture.Meow_ImageLoader,
+		load: function(Meow_Url, meowOnLoad, meowOnProgress, meowOnError) {
+			var Meow_Power = this;
+			var Meow_Cached = Meow_Power.Meow_SpeedCache.get(Meow_Url);
+			if(Meow_Cached !== undefined) {
+				meowOnLoad(Meow_Cached);
+				return;
+			}
+			var Meow_Img = document.createElement('image');
+			if(meowOnLoad !== undefined) {
+				Meow_Img.addEventListener('load', function(Meow_Event) {
+					Meow_Power.Meow_SpeedCache.add(Meow_Url, Meow_Power);
+					meowOnLoad(Meow_Power);
+					Meow_Power.Meow_Mgr.Meow_itemEnd(Meow_Url);
+				}, false);
+			} if(meowOnProgress !== undefined) {
+				Meow_Img.addEventListener('Progress',function(Meow_Event) {
+					meowOnProgress(Meow_Event);
+				}, false);
+			} if(meowOnError !== undefined) {
+				Meow_Img.addEventListener('error', function(Meow_Event) {
+					meowOnError(Meow_Event);
+				}, false);
+			} if(Meow_Power.Meow_crossOrigin !== undefined) {
+				Meow_Img.Meow_crossOrigin = Meow_Power.Meow_crossOrigin;
+			}
+			Meow_Img.src = Meow_Url;
+			Meow_Power.Meow_Mgr.Meow_itemStart(Meow_Url);
+			return Meow_Img;
+		},
+		Meow_setCrossOrigin: function(value) {
+			Meow_Power.Meow_crossOrigin = value;
+		}
+	};
+	/*--- End of game image loader --- */
+	
 }; };
