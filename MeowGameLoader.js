@@ -1,6 +1,7 @@
-var Meow_Texture = (function() {
+var Meow_GameLoader = function() {
+'use strict';
+var Meow_Texture = function() {
 	/* Main File */
-	'use strict';
 	Meow_Texture.HelloTexture = function() {
 	var Meow_Image;
 	var Meow_wrapperS;
@@ -219,4 +220,58 @@ var Meow_Texture = (function() {
 		}
 	};
 	/*----- End of cache -----*/
-});
+
+	/*--- MeowJS XHR (Xml Http Request) Loader ---*/
+	Meow_Texture.Meow_XHRLoader = function(Meow_Mgr) {
+		var Meow_Power = this;
+		Meow_Power.Meow_SpeedCache = new Meow_Texture.Meow_SpeedCache();
+		Meow_Power.Meow_Mgr = (Meow_Mgr !== undefined) ? Meow_Mgr : Meow_Texture.Meow_Default_LoadMgr;
+	};
+	Meow_Texture.Meow_XHRLoader.prototype = {
+		Meow_Construct: Meow_Texture.Meow_XHRLoader,
+		load: function(Meow_Url, meowOnLoad, meowOnProgress, meowOnError) {
+		var Meow_Power = this;
+		var Meow_Cached = Meow_Power.Meow_SpeedCache.get(Meow_Url);
+		if(Meow_Cached !== undefined) {
+			if(meowOnLoad) {
+				meowOnLoad(Meow_Cached);
+				return;
+			}
+			var Meow_Req = new Meow_XHR();
+			Meow_Req.open('GET', Meow_Url, true);
+			Meow_Req.addEventListener('load', function(Meow_Event) {
+				Meow_Power.Meow_SpeedCache.add(Meow_Url, Meow_Power.Meow_Response);
+				if(meowOnLoad) {
+					meowOnLoad(Meow_Power.Meow_Response);
+				}
+				Meow_Power.Meow_Mgr.Meow_itemEnd(Meow_Url);
+			}, false);
+			if(meowOnProgress !== undefined) {
+				Meow_Req.addEventListener('Progress', function(Meow_Event) {
+					meowOnProgress(Meow_Event);
+				}, false);
+			} if(meowOnError !== undefined) {
+				Meow_Req.addEventListener('error', function(Meow_Event) {
+					meowOnError(Meow_Event);
+				}, false);
+			} if(Meow_Power.Meow_crossOrigin !== undefined) {
+				Meow_Req.Meow_crossOrigin = Meow_Power.Meow_crossOrigin;
+			} if(Meow_RespType !== undefined) {
+				Meow_Req.Meow_RespType = Meow_Power.Meow_RespType;
+			}
+			Meow_Req.send(null);
+			Meow_Power.Meow_Mgr.Meow_itemStart(Meow_Url);
+			}
+		},
+		Meow_setRespType: function(value) {
+			var Meow_Power = this;
+			Meow_Power.Meow_RespType = value;
+		},
+		Meow_setCrossOrigin: function(value) {
+			var Meow_Power = this;
+			Meow_Power.Meow_crossOrigin = value;
+		}
+	};
+	/*--- End of MeowJS XHR Loader ---*/
+
+}; };
