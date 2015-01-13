@@ -274,4 +274,26 @@ var Meow_Texture = function() {
 	};
 	/*--- End of MeowJS XHR Loader ---*/
 
+	// MeowJS Load-Manager
+	Meow_Texture.Meow_LoadMgr = function(meowOnLoad, meowOnProgress, meowOnError) {
+		var Meow_Power = this;
+		var Meow_Loaded = 0;
+		var Meow_total = 0;
+		Meow_Power.meowOnLoad = meowOnLoad;
+		Meow_Power.meowOnProgress = meowOnProgress;
+		Meow_Power.meowOnError = meowOnError;
+		Meow_Power.Meow_itemStart = function(Meow_Url) {
+			Meow_total++;
+		};
+		Meow_Power.Meow_itemEnd = function(Meow_Url) {
+			Meow_Loaded++;
+			if(Meow_Power.meowOnProgress !== undefined) {
+				Meow_Power.meowOnProgress(Meow_Url, Meow_Loaded, Meow_total);
+			} if(Meow_Loaded === Meow_total && Meow_Power.meowOnLoad !== undefined) {
+				Meow_Power.meowOnLoad();
+			}
+		};
+	};
+	// End of load manager
+
 }; };
