@@ -195,13 +195,15 @@ var Meow_Texture = function() {
 	};
 	/*--- End of compression texture ---*/
 
+	Meow_GameLoader = Meow_Texture;
+
 	/* MeowJS --- Cache --- */
-	Meow_Texture.Meow_SpeedCache = function() {
+	Meow_GameLoader.Meow_SpeedCache = function() {
 		var Meow_Power = this;
 		Meow_Power.Meow_Files = {};
 	};
-	Meow_Texture.Meow_SpeedCache.prototype = {
-		Meow_Construct: Meow_Texture.Meow_SpeedCache,
+	Meow_GameLoader.Meow_SpeedCache.prototype = {
+		Meow_Construct: Meow_GameLoader.Meow_SpeedCache,
 		add: function(Meow_Key, Meow_File) {
 			var Meow_Power = this;
 			Meow_Power.Meow_Files[Meow_Key] = Meow_File;
@@ -222,13 +224,13 @@ var Meow_Texture = function() {
 	/*----- End of cache -----*/
 
 	/*--- MeowJS XHR (Xml Http Request) Loader ---*/
-	Meow_Texture.Meow_XHRLoader = function(Meow_Mgr) {
+	Meow_GameLoader.Meow_XHRLoader = function(Meow_Mgr) {
 		var Meow_Power = this;
-		Meow_Power.Meow_SpeedCache = new Meow_Texture.Meow_SpeedCache();
-		Meow_Power.Meow_Mgr = (Meow_Mgr !== undefined) ? Meow_Mgr : Meow_Texture.Meow_Default_LoadMgr;
+		Meow_Power.Meow_SpeedCache = new Meow_GameLoader.Meow_SpeedCache();
+		Meow_Power.Meow_Mgr = (Meow_Mgr !== undefined) ? Meow_Mgr : Meow_GameLoader.Meow_Default_LoadMgr;
 	};
-	Meow_Texture.Meow_XHRLoader.prototype = {
-		Meow_Construct: Meow_Texture.Meow_XHRLoader,
+	Meow_GameLoader.Meow_XHRLoader.prototype = {
+		Meow_Construct: Meow_GameLoader.Meow_XHRLoader,
 		load: function(Meow_Url, meowOnLoad, meowOnProgress, meowOnError) {
 		var Meow_Power = this;
 		var Meow_Cached = Meow_Power.Meow_SpeedCache.get(Meow_Url);
@@ -275,7 +277,7 @@ var Meow_Texture = function() {
 	/*--- End of MeowJS XHR Loader ---*/
 
 	// MeowJS Load-Manager
-	Meow_Texture.Meow_LoadMgr = function(meowOnLoad, meowOnProgress, meowOnError) {
+	Meow_GameLoader.Meow_LoadMgr = function(meowOnLoad, meowOnProgress, meowOnError) {
 		var Meow_Power = this;
 		var Meow_Loaded = 0;
 		var Meow_total = 0;
@@ -297,13 +299,13 @@ var Meow_Texture = function() {
 	// End of load manager
 
 	/* --- MeowJS Gaming Image Loader ---*/
-	Meow_Texture.Meow_ImageLoader = function(Meow_Mgr) {
+	Meow_GameLoader.Meow_ImageLoader = function(Meow_Mgr) {
 		var Meow_Power = this;
-		Meow_Power.Meow_SpeedCache = new Meow_Texture.Meow_SpeedCache();
-		Meow_Power.Meow_Mgr = (Meow_Mgr !== undefined) ? Meow_Mgr : Meow_Texture.Meow_Default_LoadMgr;
+		Meow_Power.Meow_SpeedCache = new Meow_GameLoader.Meow_SpeedCache();
+		Meow_Power.Meow_Mgr = (Meow_Mgr !== undefined) ? Meow_Mgr : Meow_GameLoader.Meow_Default_LoadMgr;
 	};
-	Meow_Texture.Meow_ImageLoader.prototype = {
-		Meow_Construct: Meow_Texture.Meow_ImageLoader,
+	Meow_GameLoader.Meow_ImageLoader.prototype = {
+		Meow_Construct: Meow_GameLoader.Meow_ImageLoader,
 		load: function(Meow_Url, meowOnLoad, meowOnProgress, meowOnError) {
 			var Meow_Power = this;
 			var Meow_Cached = Meow_Power.Meow_SpeedCache.get(Meow_Url);
