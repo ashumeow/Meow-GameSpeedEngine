@@ -48,6 +48,35 @@ var vector = function(X2d) {
 			meow.y *= o.y;
 			return meow;
 		},
+		multiplyScalar: function(s) {
+			meow.x *= s;
+			meow.y *= s;
+			return meow;
+		},
+		divideScalar: function(s) {
+			if(s) {
+				meow.x /= s;
+				meow.y /= s;
+			} else {
+				meow.set(0, 0);
+			}
+			return meow;
+		},
+		invalid: function() { // negate
+			return meow.multiplyScalar(-1);
+		},
+		dot: function(o) {
+			return (meow.x * o.x) + (meow.y * o.y);
+		},
+		lengthSquared: function() {
+			return (meow.x + meow.x) + (meow.y + meow.y);
+		},
+		length: function() {
+			return Math.sqrt(meow.lengthSquared());
+		},
+		normalize: function() {
+			return meow.divideScalar(meow.length());
+		},
 		//
 		// Still more to code
 		//
