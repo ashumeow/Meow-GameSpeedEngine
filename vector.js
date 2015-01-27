@@ -8,6 +8,9 @@ var vector = function(X2d) {
 	xx.extend(vector, {
 		zero: new X2d.vector()
 	});
+	// o => vector
+	// o1, o2 => vector
+	// s => scalar
 	xx.extend(vector.prototype, main.events, {
 		set: function(x, y) {
 			meow.x = x;
@@ -77,8 +80,40 @@ var vector = function(X2d) {
 		normalize: function() {
 			return meow.divideScalar(meow.length());
 		},
-		//
-		// Still more to code
-		//
+		distanceTo: function(o) {
+			return Math.sqrt(meow.distanceToSquared(o));
+		},
+		distanceToSquared: function(o) {
+			var dx, dy; // dx, dy => distance x, distance y
+			dx = meow.x - o.x;
+			dy = meow.y - o.y;
+			return (dx * dx) + (dy * dy);
+		},
+		setLength: function(a) {
+			// a => length
+			return meow.normalize().multiplyScalar(a);
+		},
+		equals: function(o) {
+			return (meow.distanceTo(o) < 0.0001);
+		},
+		lerp: function(o, t) {
+			// lerp => linear interpolation
+			var x, y;
+			x = (o.x - meow.x) * t + (meow.x);
+			y = (o.y - meow.y) * t + (meow.y);
+			return meow.set(x, y);
+		},
+		isZero: function() {
+			return (meow.length() < 0.0001);
+		},
+		toString: function() {
+			return meow.x + ',' + meow.y;
+		},
+		toObject: function() {
+			return { x: meow.x, y: meow.y };
+		}
 	});
+	//
+	// Still more to code
+	//
 };
