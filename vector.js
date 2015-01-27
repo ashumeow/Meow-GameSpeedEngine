@@ -113,7 +113,27 @@ var vector = function(X2d) {
 			return { x: meow.x, y: meow.y };
 		}
 	});
-	//
-	// Still more to code
-	//
+	var xgs = {
+		// xgs => Get Set x
+		get: function() {
+			return meow.x;
+		},
+		set: function(o) {
+			meow.x = o;
+			meow.trigger(X2d.events.change, 'x');
+		}
+	};
+	var ygs = {
+		// ygs => Get Set y
+		get: function() {
+			return meow.y;
+		},
+		set: function() {
+			meow.y = o;
+			meow.trigger(X2d.events.change, 'y');
+		}
+	};
+	// binding
+	main.events.bind.apply(meow, arguments);
+	return meow;
 };
